@@ -1,0 +1,23 @@
+{
+  "name": "jupiter-toys",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright TypeScript automation tests for Jupiter Toys",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:chromium": "playwright test --project=chromium",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "Srinivas Kamutapu",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2"
+  }
+}
