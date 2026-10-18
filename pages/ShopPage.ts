@@ -1,16 +1,11 @@
-// Import the Page type from Playwright.
-import type { Page } from '@playwright/test';
+// Import Playwright's expect function for assertions.
+import { expect } from '@playwright/test';
 
-// Create a class to handle the Jupiter Toys Shop page.
-export class ShopPage {
+// Import the BasePage class to use its common properties and methods.
+import { BasePage } from './BasePage';
 
-    // Keep the browser page inside this class and prevent it from being replaced.
-    private readonly page: Page;
-
-    // Receive the browser page when creating a ShopPage object.
-    constructor(page: Page) {
-        this.page = page;
-    }
+// ShopPage inherits common properties and methods from BasePage.
+export class ShopPage extends BasePage { 
 
     // Navigate to the Shop page.
     async goToShop(): Promise<void> {
@@ -30,6 +25,12 @@ export class ShopPage {
 
             await product.getByRole('link', { name: 'Buy' }).click();
         }
+    }
+
+    // Verify that the Shop page is displayed.
+    async verifyPageLoaded(): Promise<void> {
+        // Check that at least one product is visible on the Shop page.
+        await expect(this.page.locator('.product').first()).toBeVisible();
     }
 
 }

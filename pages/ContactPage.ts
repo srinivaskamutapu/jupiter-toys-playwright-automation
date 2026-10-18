@@ -1,19 +1,13 @@
-// Import the Page type from Playwright to work with the browser.
-import type { Page } from '@playwright/test';
+// Import Playwright's expect function for assertions.
+import { expect } from '@playwright/test';
 
-// Create a class to handle the Jupiter Toys Contact page.
-export class ContactPage {
+// Import the BasePage class to use its common properties and methods.
+import { BasePage } from './BasePage';
 
-    // Keep the browser page inside this class and prevent it from being replaced.
-    private readonly page: Page;
+// ContactPage inherits common properties and methods from BasePage.
+export class ContactPage extends BasePage {    
 
-    // Get the browser page when we create a ContactPage object.
-    constructor(page: Page) {
-        // Save the browser page so other methods can use it.
-        this.page = page;
-    }
-
-    // Click the Submit button on the Contact page.
+    // Click the Submit link on the Contact page.
     async submitForm(): Promise<void> {
         // Find the Submit link and click it.
         await this.page.getByRole('link', { name: 'Submit' }).click();
@@ -44,4 +38,9 @@ export class ContactPage {
         await this.enterMessage(message);
     }
 
+    // Verify that the Contact page is displayed.
+    async verifyPageLoaded(): Promise<void> {
+        // Check that the Forename field is visible on the Contact page.
+        await expect( this.page.getByLabel('Forename') ).toBeVisible();
+    }
 }

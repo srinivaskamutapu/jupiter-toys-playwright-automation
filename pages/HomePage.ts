@@ -1,21 +1,15 @@
-// Import Page from Playwright to work with the browser.
-import type { Page } from '@playwright/test';
+// Import Playwright's expect function for assertions.
+import { expect } from '@playwright/test';
 
-// Create a class to handle the Jupiter Toys home page.
-export class HomePage {
+//This allows HomePage to use the BasePage class.
+import { BasePage } from './BasePage';
 
-    // Keep the browser page inside this class and prevent it from being replaced.
-    private readonly page: Page;
+// HomePage inherits common properties and methods from BasePage.
+export class HomePage extends BasePage{
 
-    // Get the browser page when we create a HomePage object.
-    constructor(page: Page) {
-        // Save the browser page so other methods can use it.
-        this.page = page;
-    }
-
-    // Open the Jupiter Toys home page - Base URL
+    // Open the Jupiter Toys homepage using the configured baseURL.
     async navigate(): Promise<void> {
-        await this.page.goto('/');
+        await this.navigateTo('/');
     }
 
     // Click the Contact link to open the Contact page.
@@ -24,4 +18,9 @@ export class HomePage {
         await this.page.getByRole('link', { name: 'Contact' }).click();
     }
     
+    // Verify that the Jupiter Toys homepage is displayed.
+    async verifyPageLoaded(): Promise<void> {
+        // Check that the Start Shopping link is visible on the homepage.
+        await expect( this.page.getByRole('link', { name: 'Start Shopping' }) ).toBeVisible();
+    }
 }
